@@ -148,6 +148,17 @@ html, body {
 
 .hint { font-size: .78rem; color: var(--muted); line-height: 1.5; }
 
+/* ---------- Sector breakdown ---------- */
+.sectors { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 10px; }
+.sector-top { display: flex; justify-content: space-between; gap: 10px; font-size: .82rem; margin-bottom: 4px; }
+.sector-share { color: var(--c-demand); font-weight: 600; flex: none; }
+.sector-bar { height: 6px; background: rgba(255,255,255,.07); border-radius: 999px; overflow: hidden; }
+.sector-bar span {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, #4ea1ff, #6fb6ff);
+  border-radius: 999px;
+}
+
 /* ---------- Detail panel ---------- */
 #detail-back {
   background: none;

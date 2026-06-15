@@ -226,6 +226,49 @@ const SITES = [
       ["Substitute", "None"],
       ["2026 capacity", "Fully allocated"]
     ]
+  },
+  {
+    id: "nasa-kennedy",
+    name: "NASA Kennedy Space Center",
+    type: "demand",
+    location: "Merritt Island, Florida, USA",
+    coords: [28.57, -80.65],
+    status: "online",
+    role: "Aerospace and rocketry are major helium users. Because helium is inert and stays gaseous at extreme cold, it is used to purge and pressurise rocket propellant tanks and fuel lines. A single heavy-lift launch can consume large volumes, and there is no practical substitute for cryogenic propellant systems.",
+    metrics: [
+      ["Sector", "Aerospace & rocketry"],
+      ["Use", "Purging & pressurising propellant systems"],
+      ["Substitute", "None for cryogenic propellants"]
+    ]
+  },
+  {
+    id: "cern",
+    name: "CERN (Large Hadron Collider)",
+    type: "demand",
+    location: "Geneva, Switzerland / France",
+    coords: [46.23, 6.05],
+    status: "online",
+    role: "Big-science and quantum research depend on liquid helium to cool superconducting magnets to near absolute zero. CERN's LHC is cooled by roughly 120 tonnes of liquid helium, and the same superconducting physics underpins quantum computers and MRI machines.",
+    metrics: [
+      ["Sector", "Scientific research / quantum"],
+      ["Use", "Cooling superconducting magnets to ~1.9 K"],
+      ["LHC helium inventory", "~120 tonnes liquid He"]
+    ]
+  },
+  {
+    id: "eth-zurich",
+    name: "ETH Zurich (research labs)",
+    type: "demand",
+    location: "Zurich, Switzerland",
+    coords: [47.38, 8.55],
+    status: "online",
+    role: "Representative of the global research and medical sector. Liquid helium cools NMR spectrometers, quantum experiments and MRI-class magnets. ETH sources mainly Algerian helium, stockpiled ahead of price rises, and recycles ~85% of its helium (90%+ for NMR) to weather the shortage.",
+    metrics: [
+      ["Sector", "Research & cryogenics"],
+      ["Source", "Mainly Algeria"],
+      ["Recycling", "~85% reused (90%+ for NMR)"],
+      ["2022 price spike", "Rose 4-5x at peak"]
+    ]
   }
 ];
 
@@ -244,6 +287,9 @@ const FLOWS = [
   { from: "us-labarge", to: "seagate", disrupted: false },
   { from: "algeria", to: "airliquide", disrupted: false },
   { from: "us-labarge", to: "airproducts", disrupted: false },
+  { from: "us-labarge", to: "nasa-kennedy", disrupted: false },
+  { from: "algeria", to: "cern", disrupted: false },
+  { from: "algeria", to: "eth-zurich", disrupted: false },
   { from: "russia-amur", to: "skhynix", disrupted: false, note: "sanction-restricted" },
 
   // Algerian volumes rerouted toward Asia to partially backfill lost Qatari supply
