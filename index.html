@@ -6,11 +6,30 @@
   <title>The Helium Bottleneck: Global Supply Chain Map (2026)</title>
   <meta name="description" content="Interactive map of the global helium supply chain and the 2026 Strait of Hormuz disruption that took Qatar's ~33% share offline." />
 
+  <!-- Social preview (Open Graph + Twitter).
+       NOTE: og:url / og:image use absolute URLs. Update the base below if you
+       deploy somewhere other than https://g30r633.github.io/helium-supply-map/ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The Helium Bottleneck: Global Supply Chain Map (2026)" />
+  <meta property="og:description" content="An interactive map of the global helium supply chain and the 2026 Strait of Hormuz disruption that took ~33% of global supply offline since March 2026." />
+  <meta property="og:url" content="https://g30r633.github.io/helium-supply-map/" />
+  <meta property="og:image" content="https://g30r633.github.io/helium-supply-map/assets/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The Helium Bottleneck: ~33% of global helium supply offline, Strait of Hormuz closed since March 2026." />
+  <meta property="og:site_name" content="The Helium Bottleneck" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Helium Bottleneck: Global Supply Chain Map (2026)" />
+  <meta name="twitter:description" content="An interactive map of the global helium supply chain and the 2026 Strait of Hormuz disruption." />
+  <meta name="twitter:image" content="https://g30r633.github.io/helium-supply-map/assets/og-preview.png" />
+
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Arrowheads on flow lines -->
+  <script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,6 +50,12 @@
       </div>
       <button id="panel-toggle" aria-label="Toggle information panel">Info</button>
     </header>
+
+    <!-- Headline impact banner -->
+    <div id="impact-banner" role="alert">
+      <span class="impact-dot"></span>
+      <span class="impact-text"><strong>&approx;&#8531; of global helium supply offline</strong> since March 2026 &middot; Strait of Hormuz closed</span>
+    </div>
 
     <div id="layout">
       <!-- Map -->
@@ -105,6 +130,18 @@
           </section>
 
           <p class="hint">Click any marker on the map for details. Use the layer controls to toggle extraction sites, producers, demand centres and flow routes.</p>
+
+          <details class="sources">
+            <summary>Sources &amp; methodology</summary>
+            <p>Figures are approximate and compiled from public reporting, verified as of April 2026. Production and demand shares are rounded illustrative estimates that vary by source and year.</p>
+            <ul>
+              <li>ETH Zurich, &ldquo;How ETH Zurich is responding to the global helium shortage&rdquo; (Apr 2026): supply impact, sourcing, recycling and price context.</li>
+              <li>US Geological Survey (USGS) Mineral Commodity Summaries: helium production and reserves.</li>
+              <li>Simon-Kucher, &ldquo;What the helium shortage reveals about modern supply chains&rdquo;: supply-chain concentration and resilience.</li>
+              <li>Contemporary news reporting (Reuters, Tom&rsquo;s Hardware, Fortune and others): Strait of Hormuz disruption and semiconductor/HDD impact.</li>
+            </ul>
+            <p>Built with Leaflet.js. Marker positions are representative of named sites; flow lines are illustrative of trade relationships, not exact shipping routes.</p>
+          </details>
         </div>
 
         <div id="sidebar-detail" hidden>

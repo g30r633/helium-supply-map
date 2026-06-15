@@ -78,6 +78,27 @@ html, body {
   cursor: pointer;
 }
 
+/* ---------- Headline impact banner ---------- */
+#impact-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, rgba(255,77,77,.18), rgba(255,77,77,.07));
+  border-bottom: 1px solid rgba(255,77,77,.4);
+  color: var(--text);
+  padding: 9px 16px;
+  font-size: .92rem;
+  text-align: center;
+  z-index: 1100;
+}
+#impact-banner strong { color: #ff9a9a; font-weight: 700; }
+.impact-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex: none;
+  background: var(--c-choke);
+  animation: pulse 2s infinite;
+}
+
 /* ---------- Layout ---------- */
 #layout {
   flex: 1;
@@ -147,6 +168,22 @@ html, body {
 .stat-label { font-size: .78rem; color: var(--muted); margin-top: 2px; }
 
 .hint { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+
+/* ---------- Sources & methodology ---------- */
+.sources { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 14px; }
+.sources summary {
+  cursor: pointer;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--accent);
+  list-style: none;
+}
+.sources summary::-webkit-details-marker { display: none; }
+.sources summary::before { content: "\25B8\00A0"; }
+.sources[open] summary::before { content: "\25BE\00A0"; }
+.sources p, .sources li { font-size: .76rem; color: var(--muted); line-height: 1.5; }
+.sources p { margin: 10px 0 0; }
+.sources ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 7px; }
 
 /* ---------- Sector breakdown ---------- */
 .sectors { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 10px; }
@@ -306,6 +343,7 @@ html, body {
   #panel-toggle { display: inline-block; }
   #legend { bottom: auto; top: 12px; left: 12px; padding: 9px 11px; }
   #legend li { font-size: .72rem; }
+  #impact-banner { font-size: .76rem; padding: 8px 12px; }
 
   /* Collapsible sidebar on mobile */
   #sidebar.collapsed { display: none; }

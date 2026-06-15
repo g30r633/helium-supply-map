@@ -41,10 +41,27 @@ Works as-is on **GitHub Pages**, **Netlify** or **Vercel** with no build step.
 ## File structure
 
 ```
-index.html      # markup, panels, legend
-css/style.css   # styling & responsive layout
-js/data.js      # supply-chain data (edit figures here)
-js/app.js       # Leaflet map, markers, flows, interactions
+index.html              # markup, panels, legend, social-preview tags
+css/style.css           # styling & responsive layout
+js/data.js              # supply-chain data (edit figures here)
+js/app.js               # Leaflet map, markers, flows, interactions
+assets/og-preview.png   # 1200x630 social-preview (Open Graph) image
+scripts/make-og-image.py# regenerates the preview image (python3 + Pillow)
+```
+
+### Social preview
+
+`index.html` includes Open Graph / Twitter tags so the link renders as a card
+with a thumbnail when shared (e.g. on LinkedIn). The `og:url` and `og:image`
+tags use absolute URLs pointing at
+`https://g30r633.github.io/helium-supply-map/` — **update these if you deploy
+to a different domain**, otherwise the preview image won't resolve.
+
+Regenerate the preview image after a design change with:
+
+```bash
+pip install Pillow
+python3 scripts/make-og-image.py
 ```
 
 ## Data notes

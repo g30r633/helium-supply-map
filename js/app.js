@@ -52,8 +52,15 @@ function coordOf(ref) {
 }
 
 // ---------- Markers ----------
+// Extraction markers are scaled by output (M m³/yr) so the US/Qatar dominance
+// reads at a glance; diameter is proportional to sqrt(output) for area scaling.
+function markerSize(site) {
+  if (site.type !== "extraction") return 14;
+  return site.output ? Math.max(12, Math.round(3 * Math.sqrt(site.output))) : 11;
+}
+
 function makeMarker(site) {
-  const size = site.type === "extraction" ? 18 : 14;
+  const size = markerSize(site);
   const icon = L.divIcon({
     className: "",
     html: `<div class="he-marker ${site.type}" style="width:${size}px;height:${size}px"></div>`,
@@ -92,6 +99,25 @@ FLOWS.forEach((flow) => {
   const line = L.polyline(pts, style);
   if (flow.note) line.bindTooltip(flow.note, { sticky: true });
   layers.flows.addLayer(line);
+
+  // Directional arrowhead pointing from source to destination
+  if (typeof L.polylineDecorator === "function") {
+    const arrowColor = flow.disrupted ? COLORS.choke : flow.backfill ? COLORS.producer : "#8fd0ff";
+    const decorator = L.polylineDecorator(line, {
+      patterns: [
+        {
+          offset: "62%",
+          repeat: 0,
+          symbol: L.Symbol.arrowHead({
+            pixelSize: 11,
+            polygon: true,
+            pathOptions: { stroke: false, fillOpacity: 0.95, color: arrowColor }
+          })
+        }
+      ]
+    });
+    layers.flows.addLayer(decorator);
+  }
 });
 
 // ---------- Chokepoint ----------

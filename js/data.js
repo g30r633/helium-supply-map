@@ -10,6 +10,7 @@ const SITES = [
     location: "Wyoming & Texas, USA",
     coords: [42.26, -110.20],
     status: "online",
+    output: 81,
     role: "Largest single helium-producing nation. ExxonMobil's Shute Creek plant at La Barge, Wyoming is the biggest individual source. The former US Federal Helium Reserve (Cliffside, near Amarillo, Texas) was sold in 2024 and is now operated by Messer.",
     metrics: [
       ["Annual output", "~81M m³/yr"],
@@ -24,6 +25,7 @@ const SITES = [
     location: "Ras Laffan Industrial City, Qatar",
     coords: [25.90, 51.55],
     status: "offline",
+    output: 63,
     role: "World's largest helium export hub, refined as a byproduct of North Field LNG. Qatar's only export route is by sea through the Strait of Hormuz, which is now closed. Processing infrastructure was damaged in mid-March 2026 and the complex has been unable to ship product since. Even once the conflict ends, the damaged facilities are expected to take around a year to fully repair and restart.",
     metrics: [
       ["Share of global supply", "~33%"],
@@ -40,6 +42,7 @@ const SITES = [
     location: "Arzew, Algeria",
     coords: [35.83, -0.32],
     status: "online",
+    output: 18,
     role: "Long-standing helium producer extracting from LNG streams on the Mediterranean coast. Traditionally a key supplier to Europe. With Qatar offline, Algerian volumes are increasingly being diverted to Asian markets to backfill the shortfall, which tightens supply for Europe even though Algeria itself keeps producing.",
     metrics: [
       ["Role", "Major LNG-linked producer"],
@@ -54,6 +57,7 @@ const SITES = [
     location: "Svobodny, Amur Oblast, Russia",
     coords: [51.40, 128.10],
     status: "online",
+    output: 15,
     role: "Designed to become one of the world's largest helium sources, feeding Chinese demand via pipeline gas. Output exists but is largely walled off from Western markets under US/EU sanctions.",
     metrics: [
       ["Design capacity", "Among world's largest"],
