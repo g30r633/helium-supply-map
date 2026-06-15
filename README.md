@@ -54,7 +54,7 @@ scripts/make-og-image.py# regenerates the preview image (python3 + Pillow)
 `index.html` includes Open Graph / Twitter tags so the link renders as a card
 with a thumbnail when shared (e.g. on LinkedIn). The `og:url` and `og:image`
 tags use absolute URLs pointing at
-`https://g30r633.github.io/helium-supply-map/` — **update these if you deploy
+`https://g30r633.github.io/helium-supply-map/`. **Update these if you deploy
 to a different domain**, otherwise the preview image won't resolve.
 
 Regenerate the preview image after a design change with:

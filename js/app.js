@@ -192,7 +192,12 @@ function showDetail(site) {
   document.getElementById("map").classList.remove("expanded");
   sidebar.scrollTop = 0;
 
-  map.flyTo(site.coords, Math.max(map.getZoom(), 4), { duration: 0.6 });
+  const zoom = Math.max(map.getZoom(), 4);
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    map.setView(site.coords, zoom);
+  } else {
+    map.flyTo(site.coords, zoom, { duration: 0.6 });
+  }
 }
 
 function showOverview() {
