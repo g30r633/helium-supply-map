@@ -1,4 +1,4 @@
-/* Helium Supply Chain Map — Leaflet app */
+/* Helium Supply Chain Map (Leaflet app) */
 
 const COLORS = {
   extraction: "#3fb27f",

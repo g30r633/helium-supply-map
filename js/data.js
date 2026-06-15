@@ -1,4 +1,4 @@
-/* Helium supply-chain data — verified as of April 2026.
+/* Helium supply-chain data, verified as of April 2026.
    Figures are approximate and intended for illustration. */
 
 const SITES = [
@@ -24,7 +24,7 @@ const SITES = [
     location: "Ras Laffan Industrial City, Qatar",
     coords: [25.90, 51.55],
     status: "offline",
-    role: "World's largest helium export hub, refined as a byproduct of North Field LNG. Qatar's only export route is by sea through the Strait of Hormuz — now closed. The complex has been unable to ship product since March 2026.",
+    role: "World's largest helium export hub, refined as a byproduct of North Field LNG. Qatar's only export route is by sea through the Strait of Hormuz, which is now closed. The complex has been unable to ship product since March 2026.",
     metrics: [
       ["Share of global supply", "~33%"],
       ["2025 output", "~63M m³"],
@@ -39,7 +39,7 @@ const SITES = [
     location: "Arzew, Algeria",
     coords: [35.83, -0.32],
     status: "online",
-    role: "Long-standing helium producer extracting from LNG streams on the Mediterranean coast. A key supplier to European markets and partially able to backfill lost Qatari volumes — though nowhere near enough.",
+    role: "Long-standing helium producer extracting from LNG streams on the Mediterranean coast. A key supplier to European markets and partially able to backfill lost Qatari volumes, though nowhere near enough.",
     metrics: [
       ["Role", "Major LNG-linked producer"],
       ["Primary market", "Europe"],
@@ -56,7 +56,7 @@ const SITES = [
     role: "Designed to become one of the world's largest helium sources, feeding Chinese demand via pipeline gas. Output exists but is largely walled off from Western markets under US/EU sanctions.",
     metrics: [
       ["Design capacity", "Among world's largest"],
-      ["Market access", "Restricted — US/EU sanctions"],
+      ["Market access", "Restricted by US/EU sanctions"],
       ["Primary buyer", "China"]
     ]
   },
@@ -67,7 +67,7 @@ const SITES = [
     location: "Rukwa Basin, Tanzania",
     coords: [-8.00, 31.50],
     status: "dev",
-    role: "Helium One Global's flagship project — a rare primary helium play (not an LNG byproduct) with high-concentration discoveries. In development; first commercial production would help diversify a dangerously concentrated market.",
+    role: "Helium One Global's flagship project, a rare primary helium play (not an LNG byproduct) with high-concentration discoveries. In development; first commercial production would help diversify a dangerously concentrated market.",
     metrics: [
       ["Operator", "Helium One Global"],
       ["Type", "Primary helium (non-LNG)"],
@@ -111,9 +111,9 @@ const SITES = [
     location: "Global (HQ Woking, UK)",
     coords: [51.32, -0.56],
     status: "online",
-    role: "World's largest industrial gas company and a dominant helium distributor. Operates sourcing, purification and global logistics — the firms that physically move and allocate helium to end users.",
+    role: "World's largest industrial gas company and a dominant helium distributor. Operates sourcing, purification and global logistics, physically moving and allocating helium to end users.",
     metrics: [
-      ["Segment", "Industrial gases — #1"],
+      ["Segment", "Industrial gases (#1)"],
       ["Role", "Sourcing, purification, distribution"]
     ]
   },
@@ -160,7 +160,7 @@ const SITES = [
   /* ---------------- DEMAND CENTRES ---------------- */
   {
     id: "tsmc",
-    name: "TSMC — Semiconductor Fabs",
+    name: "TSMC: Semiconductor Fabs",
     type: "demand",
     location: "Hsinchu / Tainan, Taiwan",
     coords: [24.77, 120.99],
@@ -174,7 +174,7 @@ const SITES = [
   },
   {
     id: "samsung",
-    name: "Samsung — Fabs",
+    name: "Samsung: Fabs",
     type: "demand",
     location: "Pyeongtaek / Hwaseong, South Korea",
     coords: [37.00, 127.05],
@@ -187,7 +187,7 @@ const SITES = [
   },
   {
     id: "skhynix",
-    name: "SK hynix — Fabs",
+    name: "SK hynix: Fabs",
     type: "demand",
     location: "Icheon, South Korea",
     coords: [37.27, 127.44],
@@ -200,7 +200,7 @@ const SITES = [
   },
   {
     id: "seagate",
-    name: "Seagate — HDD Manufacturing",
+    name: "Seagate: HDD Manufacturing",
     type: "demand",
     location: "Korat, Thailand",
     coords: [14.97, 102.10],
@@ -214,7 +214,7 @@ const SITES = [
   },
   {
     id: "westerndigital",
-    name: "Western Digital — HDD Manufacturing",
+    name: "Western Digital: HDD Manufacturing",
     type: "demand",
     location: "Bang Pa-in, Thailand",
     coords: [14.23, 100.58],
@@ -231,7 +231,7 @@ const SITES = [
 /* Strait of Hormuz chokepoint */
 const CHOKEPOINT = {
   coords: [26.57, 56.25],
-  label: "Strait of Hormuz — CLOSED",
+  label: "Strait of Hormuz: CLOSED",
   title: "Strait of Hormuz",
   text: "The sole maritime export route for Qatari helium. Its closure has taken roughly <b>27–30% of global helium supply</b> offline since <b>March 2026</b>. With no overland alternative, Qatar's ~33% production share cannot reach world markets."
 };
@@ -245,7 +245,7 @@ const FLOWS = [
   { from: "us-labarge", to: "airproducts", disrupted: false },
   { from: "russia-amur", to: "skhynix", disrupted: false, note: "sanction-restricted" },
 
-  // Disrupted Qatari routes — drawn through the Strait of Hormuz
+  // Disrupted Qatari routes, drawn through the Strait of Hormuz
   { from: "qatar-raslaffan", via: [26.57, 56.25], to: "tsmc", disrupted: true },
   { from: "qatar-raslaffan", via: [26.57, 56.25], to: "samsung", disrupted: true },
   { from: "qatar-raslaffan", via: [26.57, 56.25], to: "skhynix", disrupted: true },
