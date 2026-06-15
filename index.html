@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Helium Bottleneck — Global Supply Chain Map (2026)</title>
+  <meta name="description" content="Interactive map of the global helium supply chain and the 2026 Strait of Hormuz disruption that took Qatar's ~33% share offline." />
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header id="topbar">
+      <div class="brand">
+        <span class="logo-dot"></span>
+        <div>
+          <h1>The Helium Bottleneck</h1>
+          <p class="subtitle">Global supply chain &amp; the 2026 Strait of Hormuz disruption</p>
+        </div>
+      </div>
+      <button id="panel-toggle" aria-label="Toggle information panel">Info</button>
+    </header>
+
+    <div id="layout">
+      <!-- Map -->
+      <main id="map" aria-label="World map of the helium supply chain"></main>
+
+      <!-- Sidebar / detail panel -->
+      <aside id="sidebar" aria-live="polite">
+        <div id="sidebar-default">
+          <div class="alert">
+            <span class="alert-badge">DISRUPTION</span>
+            <p><strong>~27–30% of global helium supply offline.</strong> Qatar's Ras Laffan complex has been unable to export since <strong>March 2026</strong> following the closure of the Strait of Hormuz.</p>
+          </div>
+
+          <section class="card">
+            <h2>About this bottleneck</h2>
+            <p>Helium is a non-renewable byproduct of natural-gas processing. It is the second-lightest element and <strong>cannot be practically stockpiled</strong>: it leaks through most container materials and, once vented, escapes Earth's atmosphere into space entirely.</p>
+            <p>Production is concentrated in a handful of gas fields, and new purification plants take <strong>5–7 years</strong> to design, permit and commission. There is no quick substitute for a lost source, which is why a single chokepoint can ripple through semiconductors, MRI scanners and hard drives for years.</p>
+          </section>
+
+          <section class="card">
+            <h2>By the numbers (2025–26)</h2>
+            <ul class="stats">
+              <li><span class="stat-num">~190M m³</span><span class="stat-label">Total global production, 2025</span></li>
+              <li><span class="stat-num">~81M m³/yr</span><span class="stat-label">US output — largest producer</span></li>
+              <li><span class="stat-num">~33%</span><span class="stat-label">Qatar's share of global supply (offline)</span></li>
+              <li><span class="stat-num">20–25%</span><span class="stat-label">Demand from semiconductors (→30% by 2030)</span></li>
+            </ul>
+          </section>
+
+          <p class="hint">Click any marker on the map for details. Use the layer controls to toggle extraction sites, producers, demand centres and flow routes.</p>
+        </div>
+
+        <div id="sidebar-detail" hidden>
+          <button id="detail-back" aria-label="Back to overview">&larr; Back to overview</button>
+          <div id="detail-content"></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Legend -->
+    <div id="legend" class="leaflet-control">
+      <h3>Legend</h3>
+      <ul>
+        <li><span class="key extraction"></span>Extraction site / reserve</li>
+        <li><span class="key producer"></span>Producer / distributor</li>
+        <li><span class="key demand"></span>Demand centre</li>
+        <li><span class="key chokepoint"></span>Disrupted chokepoint</li>
+        <li><span class="key line-active"></span>Active supply flow</li>
+        <li><span class="key line-disrupted"></span>Disrupted route</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer id="footnote">
+    Data verified as of April 2026. Figures are approximate and for illustration. Built with Leaflet.js · map tiles © OpenStreetMap / CARTO.
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
