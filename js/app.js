@@ -80,13 +80,16 @@ FLOWS.forEach((flow) => {
   if (flow.via) pts.push(flow.via);
   pts.push(coordOf(flow.to));
 
-  const line = L.polyline(pts, {
-    color: flow.disrupted ? COLORS.choke : "rgba(120,200,255,.7)",
-    weight: flow.disrupted ? 3 : 2,
-    opacity: flow.disrupted ? 0.95 : 0.6,
-    dashArray: flow.disrupted ? "10 8" : null,
-    className: flow.disrupted ? "flow-disrupted" : ""
-  });
+  let style;
+  if (flow.disrupted) {
+    style = { color: COLORS.choke, weight: 3, opacity: 0.95, dashArray: "10 8", className: "flow-disrupted" };
+  } else if (flow.backfill) {
+    style = { color: COLORS.producer, weight: 2.5, opacity: 0.85, dashArray: "2 8", className: "" };
+  } else {
+    style = { color: "rgba(120,200,255,.7)", weight: 2, opacity: 0.6, dashArray: null, className: "" };
+  }
+
+  const line = L.polyline(pts, style);
   if (flow.note) line.bindTooltip(flow.note, { sticky: true });
   layers.flows.addLayer(line);
 });

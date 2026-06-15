@@ -24,12 +24,13 @@ const SITES = [
     location: "Ras Laffan Industrial City, Qatar",
     coords: [25.90, 51.55],
     status: "offline",
-    role: "World's largest helium export hub, refined as a byproduct of North Field LNG. Qatar's only export route is by sea through the Strait of Hormuz, which is now closed. The complex has been unable to ship product since March 2026.",
+    role: "World's largest helium export hub, refined as a byproduct of North Field LNG. Qatar's only export route is by sea through the Strait of Hormuz, which is now closed. Processing infrastructure was damaged in mid-March 2026 and the complex has been unable to ship product since. Even once the conflict ends, the damaged facilities are expected to take around a year to fully repair and restart.",
     metrics: [
       ["Share of global supply", "~33%"],
       ["2025 output", "~63M m³"],
       ["Status", "Offline since March 2026"],
-      ["Export route", "Strait of Hormuz (closed)"]
+      ["Export route", "Strait of Hormuz (closed)"],
+      ["Repair timeline", "~1 year to restart"]
     ]
   },
   {
@@ -39,10 +40,10 @@ const SITES = [
     location: "Arzew, Algeria",
     coords: [35.83, -0.32],
     status: "online",
-    role: "Long-standing helium producer extracting from LNG streams on the Mediterranean coast. A key supplier to European markets and partially able to backfill lost Qatari volumes, though nowhere near enough.",
+    role: "Long-standing helium producer extracting from LNG streams on the Mediterranean coast. Traditionally a key supplier to Europe. With Qatar offline, Algerian volumes are increasingly being diverted to Asian markets to backfill the shortfall, which tightens supply for Europe even though Algeria itself keeps producing.",
     metrics: [
       ["Role", "Major LNG-linked producer"],
-      ["Primary market", "Europe"],
+      ["Primary market", "Europe (now partly diverting to Asia)"],
       ["Status", "Operational"]
     ]
   },
@@ -244,6 +245,9 @@ const FLOWS = [
   { from: "algeria", to: "airliquide", disrupted: false },
   { from: "us-labarge", to: "airproducts", disrupted: false },
   { from: "russia-amur", to: "skhynix", disrupted: false, note: "sanction-restricted" },
+
+  // Algerian volumes rerouted toward Asia to partially backfill lost Qatari supply
+  { from: "algeria", to: "skhynix", backfill: true, note: "Algerian helium rerouted to Asia to backfill lost Qatari supply" },
 
   // Disrupted Qatari routes, drawn through the Strait of Hormuz
   { from: "qatar-raslaffan", via: [26.57, 56.25], to: "tsmc", disrupted: true },

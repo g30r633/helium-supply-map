@@ -212,6 +212,7 @@ html, body {
 .key.demand    { background: var(--c-demand); }
 .key.chokepoint { background: var(--c-choke); border-radius: 3px; }
 .key.line-active { height: 0; border: none; border-top: 3px solid rgba(120,200,255,.9); border-radius: 0; }
+.key.line-backfill { height: 0; border: none; border-top: 3px dotted var(--c-producer); border-radius: 0; }
 .key.line-disrupted { height: 0; border: none; border-top: 3px dashed var(--c-choke); border-radius: 0; }
 
 /* ---------- Markers ---------- */
