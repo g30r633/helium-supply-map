@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Vellum trial has ended</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+    :root {
+      --bg:#09090b; --bg-2:#0c0c0f; --surface:#111113; --surface-2:#16161b;
+      --border:#1e1e22; --border-2:#2a2a31;
+      --text:#f4f3f5; --muted:#8f8f95; --dim:#56565d;
+      --accent:#d4a574; --accent-2:#e8c79c;
+    }
+    body {
+      background:var(--bg); color:var(--text);
+      font-family:'Inter',-apple-system,sans-serif; line-height:1.6;
+      min-height:100vh; position:relative; overflow-x:hidden;
+      display:flex; align-items:center; justify-content:center;
+    }
+    body::after {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.025;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    #bg-canvas {
+      position:fixed; inset:0; width:100%; height:100%; z-index:0; opacity:0.4;
+      -webkit-mask-image:radial-gradient(120% 80% at 50% 30%, #000 30%, transparent 75%);
+      mask-image:radial-gradient(120% 80% at 50% 30%, #000 30%, transparent 75%);
+    }
+    .wrap { position:relative; z-index:1; max-width:760px; width:100%; padding:48px 28px; text-align:center; }
+
+    .brand { display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:26px; }
+    .brand .dot { width:18px; height:18px; border-radius:6px;
+      background:linear-gradient(135deg,var(--accent-2),var(--accent)); box-shadow:0 0 16px rgba(212,165,116,0.5); }
+    .brand span { font-size:18px; font-weight:600; letter-spacing:-0.5px; }
+
+    h1 { font-size:clamp(32px,4.6vw,46px); font-weight:600; letter-spacing:-1.8px; line-height:1.08; margin-bottom:16px; }
+    h1 .grad { background:linear-gradient(110deg,#fff 25%,var(--accent-2) 65%,var(--accent) 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .lead { font-size:16.5px; color:var(--muted); max-width:480px; margin:0 auto 40px; }
+
+    .cards { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border);
+      border-radius:18px; overflow:hidden; text-align:left; }
+    .card { background:var(--bg-2); padding:34px 28px; display:flex; flex-direction:column; }
+    .card.pro { background:var(--surface); position:relative; }
+    .card.pro::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(120% 60% at 50% 0%, rgba(212,165,116,0.09), transparent 70%); }
+    .tag { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+      color:var(--dim); margin-bottom:10px; position:relative; }
+    .tag.pop { color:var(--accent); }
+    .card h2 { font-size:21px; font-weight:600; letter-spacing:-0.5px; margin-bottom:6px; position:relative; }
+    .card .price { font-size:15px; color:var(--muted); margin-bottom:22px; position:relative; }
+    .card .price b { color:var(--text); font-weight:600; }
+    ul { list-style:none; flex:1; margin-bottom:26px; position:relative; }
+    li { padding:8px 0 8px 24px; position:relative; font-size:13.5px; color:var(--muted); border-top:1px solid var(--border); }
+    li::before { content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    li:last-child { border-bottom:1px solid var(--border); }
+    .btn { display:block; text-align:center; padding:13px; border-radius:11px; font-size:14px; font-weight:600;
+      cursor:pointer; transition:all 0.18s; border:1px solid var(--border-2); background:transparent; color:var(--text); position:relative;
+      font-family:'Inter',sans-serif; width:100%; }
+    .btn:hover { background:var(--surface-2); border-color:var(--muted); }
+    .btn.primary { background:var(--text); color:var(--bg); border-color:var(--text); box-shadow:0 8px 26px rgba(212,165,116,0.18); }
+    .btn.primary:hover { transform:translateY(-2px); box-shadow:0 12px 34px rgba(212,165,116,0.28); }
+
+    .reassure { margin-top:28px; font-size:13px; color:var(--dim); }
+    .reassure b { color:var(--muted); font-weight:500; }
+
+    @media (max-width:640px) { .cards { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span><span>Vellum</span></div>
+    <h1>Your 7-day trial<br><span class="grad">has ended.</span></h1>
+    <p class="lead">Hope you enjoyed the full collection. Keep all 31 free themes forever — or bring back all 220 with Pro.</p>
+
+    <div class="cards">
+      <div class="card pro">
+        <div class="tag pop">Recommended</div>
+        <h2>Continue with Pro</h2>
+        <div class="price">From <b>$2.99/mo</b> · or <b>$17.99</b> once</div>
+        <ul>
+          <li>All 220 themes unlocked</li>
+          <li>Every animated background</li>
+          <li>New themes as they drop</li>
+          <li>Cancel any time</li>
+        </ul>
+        <button class="btn primary" id="btn-pro">See Pro options</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free</div>
+        <h2>Stay on Starter</h2>
+        <div class="price"><b>$0</b> · forever, no card</div>
+        <ul>
+          <li>31 handcrafted free themes</li>
+          <li>Claude &amp; ChatGPT</li>
+          <li>Syncs across devices</li>
+          <li>No tracking, ever</li>
+        </ul>
+        <button class="btn" id="btn-free">Continue free</button>
+      </div>
+    </div>
+
+    <p class="reassure"><b>Either way, nothing is lost</b> — your 31 free themes stay yours.</p>
+  </div>
+
+  <script src="trial-ended.js"></script>
+</body>
+</html>

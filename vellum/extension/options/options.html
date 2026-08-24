@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vellum — Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+    :root {
+      --bg:#09090b; --bg-2:#0c0c0f; --surface:#111113; --surface-2:#16161b;
+      --border:#1e1e22; --border-2:#2a2a31;
+      --text:#f4f3f5; --muted:#8f8f95; --dim:#56565d;
+      --accent:#d4a574; --accent-2:#e8c79c; --red:#e85454;
+    }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.6; position:relative; }
+    body::after {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.025;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    a { color:inherit; text-decoration:none; }
+    .wrap { max-width:680px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+
+    nav {
+      position:sticky; top:0; z-index:50;
+      background:rgba(9,9,11,0.72); backdrop-filter:saturate(140%) blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner { max-width:680px; margin:0 auto; padding:16px 28px;
+      display:flex; align-items:center; justify-content:space-between; }
+    .nav-brand { display:flex; align-items:center; gap:9px; font-size:17px; font-weight:600; letter-spacing:-0.5px; }
+    .nav-brand .dot { width:16px; height:16px; border-radius:5px;
+      background:linear-gradient(135deg,var(--accent-2),var(--accent)); box-shadow:0 0 14px rgba(212,165,116,0.5); }
+    .nav-links { font-size:13px; color:var(--muted); display:flex; gap:20px; }
+    .nav-links a:hover { color:var(--text); }
+
+    .title { padding:46px 0 30px; text-align:center; }
+    .title h1 { font-size:34px; font-weight:600; letter-spacing:-1.2px; margin-bottom:14px; }
+    .title h1 .grad { background:linear-gradient(110deg,#fff 30%,var(--accent-2) 70%,var(--accent) 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+    .badge {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'DM Mono',monospace; font-size:11px; letter-spacing:1px; text-transform:uppercase;
+      padding:7px 15px; border:1px solid var(--border-2); border-radius:100px;
+      color:var(--muted); background:rgba(255,255,255,0.02);
+    }
+    .badge .dot { width:6px; height:6px; border-radius:50%; background:var(--muted); }
+    .badge.pro { border-color:rgba(212,165,116,0.4); color:var(--accent); }
+    .badge.pro .dot { background:var(--accent); box-shadow:0 0 8px var(--accent); }
+    .badge.trial { border-color:rgba(125,211,154,0.4); color:#7dd39a; }
+    .badge.trial .dot { background:#7dd39a; box-shadow:0 0 8px #7dd39a; }
+
+    .section { padding:34px 0; border-top:1px solid var(--border); }
+    /* Your own background */
+    .cbg-drop {
+      border:1px dashed var(--border-2); border-radius:12px; padding:22px 16px; text-align:center;
+      cursor:pointer; transition:border-color .15s, background .15s;
+    }
+    .cbg-drop:hover, .cbg-drop.over { border-color:var(--accent); background:rgba(212,165,116,0.05); }
+    .cbg-drop input { display:none; }
+    .cbg-preview { width:100%; aspect-ratio:16/10; border-radius:12px; object-fit:cover; display:block; border:1px solid var(--border-2); }
+    .cbg-row { display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap; }
+    .cbg-row label { font-size:12px; color:var(--muted); min-width:52px; }
+    .cbg-row input[type=range] { flex:1; min-width:140px; accent-color:var(--accent); }
+    .cbg-seg { display:flex; gap:2px; border:1px solid var(--border-2); border-radius:8px; padding:2px; }
+    .cbg-seg button { background:transparent; border:none; color:var(--muted); cursor:pointer; font-size:12px; padding:5px 12px; border-radius:6px; }
+    .cbg-seg button.on { background:rgba(212,165,116,0.14); color:var(--accent); }
+    .cbg-swatches { display:flex; gap:6px; margin-top:12px; }
+    .cbg-swatches i { width:26px; height:26px; border-radius:6px; border:1px solid var(--border-2); display:block; }
+    .section-label {
+      font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase;
+      color:var(--accent); margin-bottom:14px;
+    }
+    .section h3 { font-size:19px; font-weight:600; letter-spacing:-0.4px; margin-bottom:8px; }
+    .section p { font-size:14.5px; color:var(--muted); line-height:1.6; margin-bottom:12px; }
+    .section p:last-child { margin-bottom:0; }
+
+    /* ── UPGRADE / PAYMENT CARDS ── */
+    .upgrade-hero { text-align:center; padding:8px 0 4px; }
+    .upgrade-hero h2 { font-size:26px; font-weight:600; letter-spacing:-0.8px; margin-bottom:8px; }
+    .upgrade-hero p { font-size:14.5px; color:var(--muted); max-width:420px; margin:0 auto 26px; }
+    .pay-cards { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border);
+      border-radius:18px; overflow:hidden; text-align:left; }
+    .pay-card {
+      background:var(--bg-2); padding:30px 26px; display:flex; flex-direction:column;
+      cursor:pointer; transition:background 0.18s; position:relative;
+    }
+    .pay-card:hover { background:var(--surface-2); }
+    .pay-card.feat { background:var(--surface); }
+    .pay-card.feat::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(120% 60% at 50% 0%, rgba(212,165,116,0.1), transparent 70%); }
+    .pc-tag { font-family:'DM Mono',monospace; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase;
+      color:var(--dim); margin-bottom:12px; position:relative; }
+    .pc-tag.pop { color:var(--accent); }
+    .pc-price { font-size:42px; font-weight:600; letter-spacing:-2px; line-height:1; margin-bottom:4px; position:relative; }
+    .pc-per { font-size:13px; color:var(--muted); margin-bottom:22px; position:relative; }
+    .pc-list { list-style:none; flex:1; margin-bottom:22px; position:relative; }
+    .pc-list li { padding:7px 0 7px 22px; position:relative; font-size:13px; color:var(--muted); border-top:1px solid var(--border); }
+    .pc-list li::before { content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    .pc-list li:last-child { border-bottom:1px solid var(--border); }
+    .pc-btn { text-align:center; padding:12px; border-radius:10px; font-size:13.5px; font-weight:600;
+      border:1px solid var(--border-2); background:transparent; color:var(--text); position:relative; transition:all 0.18s; }
+    .pay-card.feat .pc-btn { background:var(--text); color:var(--bg); border-color:var(--text); box-shadow:0 8px 24px rgba(212,165,116,0.18); }
+    .pay-card:hover .pc-btn { border-color:var(--muted); }
+    .pay-card.feat:hover .pc-btn { transform:translateY(-1px); box-shadow:0 12px 30px rgba(212,165,116,0.26); }
+    .pay-note { text-align:center; font-size:12.5px; color:var(--dim); margin-top:16px; }
+
+    /* ── INPUTS / BUTTONS ── */
+    .license-input {
+      width:100%; padding:13px 15px;
+      font-family:'DM Mono',monospace; font-size:14px; letter-spacing:1px;
+      border:1px solid var(--border-2); border-radius:11px;
+      background:rgba(255,255,255,0.02); color:var(--text); outline:none; margin-bottom:12px;
+    }
+    .license-input::placeholder { color:var(--dim); }
+    .license-input:focus { border-color:var(--accent); }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 22px; border-radius:11px; font-family:'Inter',sans-serif;
+      font-size:14px; font-weight:600; cursor:pointer; transition:all 0.18s; border:none;
+    }
+    .btn-primary { background:var(--text); color:var(--bg); }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(0,0,0,0.4); }
+    .btn-danger { background:transparent; color:var(--red); border:1px solid rgba(232,84,84,0.5); }
+    .btn-danger:hover { background:var(--red); color:#fff; }
+    .btn-ghost { background:rgba(255,255,255,0.02); color:var(--text); border:1px solid var(--border-2); }
+    .btn-ghost:hover { border-color:var(--muted); }
+
+    .msg { margin-top:10px; font-family:'DM Mono',monospace; font-size:12px; }
+    .msg.ok { color:#7dd39a; }
+    .msg.err { color:var(--red); }
+
+    .help-item { padding:14px 0; border-top:1px solid var(--border); }
+    .help-item:last-child { border-bottom:1px solid var(--border); }
+    .help-item h4 { font-size:15px; font-weight:600; margin-bottom:4px; }
+    .help-item p { font-size:13.5px; color:var(--muted); line-height:1.55; margin:0; }
+
+    footer { padding:34px 0; font-size:13px; color:var(--dim); display:flex; justify-content:space-between; }
+    footer a { color:var(--muted); }
+    footer a:hover { color:var(--text); }
+
+    .bg-opt { position:relative; aspect-ratio:1.7; border-radius:11px; cursor:pointer;
+      border:1px solid var(--border-2); overflow:hidden; transition:transform 0.18s, border-color 0.18s; }
+    .bg-opt:hover { transform:translateY(-2px); border-color:var(--muted); }
+    .bg-opt.active { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
+    .bg-opt span { position:absolute; bottom:6px; left:8px; font-size:11px; font-weight:600;
+      color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.7); }
+
+    .when-free { display:block; }
+    .when-pro { display:none; }
+    body.pro .when-free { display:none; }
+    /* A company-code user is not a Pro subscriber and must never be offered, or
+       told they hold, a Pro membership: no checkout, no "Sign out of Pro", and no
+       licence-key box. Their entitlement comes from the code alone. */
+    body.company .when-free,
+    body.company .when-pro,
+    body.company #license { display:none !important; }
+    body.pro .when-pro { display:block; }
+    /* Shown to anyone entitled, including company-code users. .when-pro is hidden
+       for them on purpose (they hold no subscription), but they can still use this. */
+    .speed-row { display:flex; align-items:center; gap:14px; margin-top:14px; flex-wrap:wrap; }
+    .speed-row input[type=range] { flex:1; min-width:200px; accent-color:var(--accent); }
+    .speed-val { font-family:ui-monospace,monospace; font-size:13px; color:var(--accent); width:52px; text-align:right; }
+    .speed-marks { display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:4px; }
+    .when-owned { display:none; }
+    body.pro .when-owned { display:block; }
+
+    @media (max-width:560px) { .pay-cards { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-brand"><span class="dot"></span>Vellum</span>
+      <div class="nav-links">
+        <a href="#upgrade" class="when-free">Go Pro</a>
+        <a href="#license">Activate</a>
+        <a href="#help">Help</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <div class="title" id="account">
+      <h1>Your <span class="grad">Vellum</span> account</h1>
+      <div class="badge" id="badge"><span class="dot"></span><span id="badge-text">Free</span></div>
+    </div>
+
+    <!-- UPGRADE — front and centre for free / trial users -->
+    <div class="section when-free" id="upgrade">
+      <div class="upgrade-hero">
+        <div class="section-label" style="text-align:center">Go Pro</div>
+        <h2>Unlock all 250 themes.</h2>
+        <p>Every animated background, interactive star field, and new theme as it drops — across Claude and ChatGPT.</p>
+      </div>
+      <div class="pay-cards">
+        <div class="pay-card feat" id="buy-monthly">
+          <div class="pc-tag pop">Most popular</div>
+          <div class="pc-price">$2.99</div>
+          <div class="pc-per">per month · cancel any time</div>
+          <ul class="pc-list">
+            <li>All 250 themes</li>
+            <li>Every animated background</li>
+            <li>New themes included</li>
+            <li>Cancel any time</li>
+          </ul>
+          <div class="pc-btn">Get Pro Monthly</div>
+        </div>
+        <div class="pay-card" id="buy-lifetime">
+          <div class="pc-tag">Best value</div>
+          <div class="pc-price">$17.99</div>
+          <div class="pc-per">one payment · yours forever</div>
+          <ul class="pc-list">
+            <li>Everything in Pro</li>
+            <li>All future themes</li>
+            <li>Save 70% over time</li>
+            <li>14-day refund</li>
+          </ul>
+          <div class="pc-btn">Get Lifetime</div>
+        </div>
+      </div>
+      <div class="pay-note">Secure checkout via Polar · cancel or refund any time</div>
+    </div>
+
+    <!-- PRO ACTIVE -->
+    <div class="section when-pro">
+      <div class="section-label">Membership</div>
+      <h3>Pro is active 🎉</h3>
+      <p>All 250 themes are unlocked across Claude and ChatGPT. Thanks for supporting Vellum.</p>
+      <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap">
+        <button class="btn btn-ghost" id="btn-refresh-license">Refresh license</button>
+        <button class="btn btn-danger" id="btn-signout">Sign out of Pro</button>
+      </div>
+      <div class="msg" id="refresh-msg"></div>
+    </div>
+
+    <div class="section" id="license">
+      <div class="section-label">License key</div>
+      <h3>Already purchased?</h3>
+      <p>Paste the license key from your purchase confirmation email to activate Pro on this device.</p>
+      <input type="text" class="license-input" id="key-input" placeholder="Paste your license key here" maxlength="60" spellcheck="false" autocomplete="off">
+      <button class="btn btn-primary" id="btn-activate">Activate Pro</button>
+      <div class="msg" id="key-msg"></div>
+    </div>
+
+    <div class="section" id="custom-bg">
+      <div class="section-label">Your own background</div>
+      <h3>Use any image as your background</h3>
+      <p class="when-free">Upload your own picture and Vellum will build a theme around it — Pro only.</p>
+      <div class="when-owned" id="cbg-body">
+        <p>Upload a picture and Vellum reads its colours to build the rest of the interface around it.</p>
+        <label class="cbg-drop" id="cbg-drop">
+          <input type="file" id="cbg-file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          <span id="cbg-drop-text">Choose an image, or drop one here</span>
+        </label>
+        <div id="cbg-editor" style="display:none; margin-top:16px">
+          <img id="cbg-preview" class="cbg-preview" alt="Your background preview">
+          <div class="cbg-swatches" id="cbg-swatches"></div>
+          <div class="cbg-row">
+            <label>Fill</label>
+            <div class="cbg-seg" id="cbg-fit">
+              <button data-fit="cover" class="on">Cover</button>
+              <button data-fit="contain">Fit</button>
+            </div>
+          </div>
+          <div class="cbg-row"><label>Drift</label><input type="range" id="cbg-drift" min="0" max="30" step="1" value="9"><span id="cbg-drift-v" style="font-size:12px;color:var(--muted);width:34px">9px</span></div>
+          <div class="cbg-row"><label>Strength</label><input type="range" id="cbg-alpha" min="20" max="100" step="5" value="100"><span id="cbg-alpha-v" style="font-size:12px;color:var(--muted);width:34px">100%</span></div>
+          <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap">
+            <button class="btn btn-primary" id="cbg-apply">Apply background</button>
+            <button class="btn btn-danger" id="cbg-remove">Remove</button>
+          </div>
+        </div>
+        <div class="msg" id="cbg-msg"></div>
+      </div>
+    </div>
+
+    <div class="section" id="company">
+      <div class="section-label">Company / Team</div>
+      <div id="company-form">
+        <h3>Have a company code?</h3>
+        <p>Enter the code from your workplace to apply your company's branded background and unlock every theme.</p>
+        <input type="text" class="license-input" id="company-input" placeholder="Enter company code" maxlength="40" spellcheck="false" autocomplete="off">
+        <button class="btn btn-primary" id="btn-company">Apply code</button>
+        <div class="msg" id="company-msg"></div>
+      </div>
+      <div id="company-active" style="display:none">
+        <h3>Company background unlocked</h3>
+        <div class="badge pro" style="margin:8px 0 14px"><span class="dot"></span><span id="company-name">Company</span></div>
+        <p>All themes are unlocked. You can switch to any theme and reapply your company background any time.</p>
+        <div id="company-bg-picker" style="display:none; margin:16px 0 4px">
+          <div class="section-label" style="margin-bottom:10px">Choose a background</div>
+          <div id="company-bg-list" style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px"></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap">
+          <button class="btn btn-primary" id="btn-company-reapply">Check for updates &amp; reapply</button>
+          <button class="btn btn-danger" id="btn-company-remove">Remove</button>
+        </div>
+        <div class="msg" id="company-active-msg"></div>
+      </div>
+    </div>
+
+    <div class="section" id="help">
+      <div class="section-label">Help</div>
+      <div class="help-item">
+        <h4>How do I apply a theme?</h4>
+        <p>Click the Vellum icon in your toolbar while on claude.ai or chatgpt.com. Tap any theme to apply it instantly.</p>
+      </div>
+      <div class="help-item">
+        <h4>My theme looks washed out?</h4>
+        <p>Switch Claude or ChatGPT to dark mode in their appearance settings. Vellum's themes are crafted for dark mode.</p>
+      </div>
+      <div class="help-item">
+        <h4>Refunds?</h4>
+        <p>Lifetime purchases have a 14-day refund window. Monthly subscriptions can be cancelled any time from your Polar dashboard.</p>
+      </div>
+      <div class="help-item">
+        <h4>Data collection?</h4>
+        <p>None. Zero tracking, analytics, or telemetry. Everything runs in your browser.</p>
+      </div>
+    </div>
+
+    <footer>
+      <span>© 2026 Vellum</span>
+      <a href="mailto:supportvellumapp@gmail.com">Contact</a>
+    </footer>
+
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

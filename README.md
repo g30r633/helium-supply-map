@@ -78,3 +78,9 @@ Figures are approximate and **verified as of April 2026**, for illustration:
 | Helium-sealed HDDs (10TB+) | No substitute; Seagate/WD 2026 capacity fully allocated |
 
 Edit `js/data.js` to update sites, statuses or flow routes.
+
+## Also in this repo
+
+- [`vellum/`](vellum/) — **Vellum**, a standalone Chrome extension: 250 animated
+  themes and dark modes for Claude and ChatGPT. A separate project that happens to
+  live here; see [`vellum/README.md`](vellum/README.md).

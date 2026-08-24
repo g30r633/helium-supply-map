@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Vellum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+    :root {
+      --bg:#09090b; --bg-2:#0c0c0f; --surface:#111113; --surface-2:#16161b;
+      --border:#1e1e22; --border-2:#2a2a31;
+      --text:#f4f3f5; --muted:#8f8f95; --dim:#56565d;
+      --accent:#d4a574; --accent-2:#e8c79c;
+    }
+    html { scroll-behavior:smooth; }
+    body {
+      background:var(--bg); color:var(--text);
+      font-family:'Inter',-apple-system,sans-serif; line-height:1.6;
+      min-height:100vh; position:relative; overflow-x:hidden;
+    }
+    body::after {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.025;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    a { color:inherit; text-decoration:none; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 28px; position:relative; z-index:1; }
+
+    /* ── NAV ── */
+    nav { position:sticky; top:0; z-index:50;
+      background:rgba(9,9,11,0.72); backdrop-filter:saturate(140%) blur(14px);
+      border-bottom:1px solid var(--border); }
+    .nav-inner { max-width:760px; margin:0 auto; padding:14px 28px;
+      display:flex; align-items:center; justify-content:space-between; }
+    .nav-brand { display:flex; align-items:center; gap:9px; font-size:17px; font-weight:600; letter-spacing:-0.5px; }
+    .nav-brand .dot { width:16px; height:16px; border-radius:5px;
+      background:linear-gradient(135deg,var(--accent-2),var(--accent)); box-shadow:0 0 14px rgba(212,165,116,0.5); }
+    .nav-acct { font-size:13px; font-weight:600; color:var(--bg); background:var(--text);
+      padding:8px 16px; border-radius:9px; transition:all 0.18s; }
+    .nav-acct:hover { transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,0.4); }
+
+    /* ── PRICING / PAYMENT ── */
+    .pricing { margin:54px 0 30px; }
+    .pricing-head { text-align:center; margin-bottom:24px; }
+    .pricing-head h2 { font-size:24px; font-weight:600; letter-spacing:-0.7px; margin-bottom:8px; }
+    .pricing-head p { font-size:14.5px; color:var(--muted); max-width:440px; margin:0 auto; }
+    .pay-cards { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border);
+      border-radius:18px; overflow:hidden; text-align:left; }
+    .pay-card { background:var(--bg-2); padding:28px 24px; display:flex; flex-direction:column;
+      cursor:pointer; transition:background 0.18s; position:relative; }
+    .pay-card:hover { background:var(--surface-2); }
+    .pay-card.feat { background:var(--surface); }
+    .pay-card.feat::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(120% 60% at 50% 0%, rgba(212,165,116,0.1), transparent 70%); }
+    .pc-tag { font-family:'DM Mono',monospace; font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase;
+      color:var(--dim); margin-bottom:12px; position:relative; }
+    .pc-tag.pop { color:var(--accent); }
+    .pc-price { font-size:38px; font-weight:600; letter-spacing:-1.8px; line-height:1; margin-bottom:4px; position:relative; }
+    .pc-per { font-size:12.5px; color:var(--muted); margin-bottom:20px; position:relative; }
+    .pc-list { list-style:none; flex:1; margin-bottom:20px; position:relative; }
+    .pc-list li { padding:6px 0 6px 22px; position:relative; font-size:12.5px; color:var(--muted); border-top:1px solid var(--border); }
+    .pc-list li::before { content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    .pc-list li:last-child { border-bottom:1px solid var(--border); }
+    .pc-btn { text-align:center; padding:11px; border-radius:10px; font-size:13px; font-weight:600;
+      border:1px solid var(--border-2); background:transparent; color:var(--text); position:relative; transition:all 0.18s; }
+    .pay-card.feat .pc-btn { background:var(--text); color:var(--bg); border-color:var(--text); box-shadow:0 8px 22px rgba(212,165,116,0.18); }
+    .pay-card:hover .pc-btn { border-color:var(--muted); }
+    .pay-card.feat:hover .pc-btn { transform:translateY(-1px); }
+    .pay-note { text-align:center; font-size:12.5px; color:var(--dim); margin-top:16px; }
+    .pay-note a { color:var(--muted); text-decoration:underline; }
+    .pay-note a:hover { color:var(--text); }
+    @media (max-width:560px){ .pay-cards { grid-template-columns:1fr; } }
+
+    /* ── HERO ── */
+    .hero { position:relative; text-align:center; padding:60px 0 56px; overflow:hidden; }
+    #welcome-canvas {
+      position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:0.5;
+      -webkit-mask-image:radial-gradient(120% 90% at 50% 20%, #000 35%, transparent 78%);
+      mask-image:radial-gradient(120% 90% at 50% 20%, #000 35%, transparent 78%);
+    }
+    .hero-inner { position:relative; z-index:1; }
+    .brand { display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:30px; }
+    .brand .dot { width:20px; height:20px; border-radius:6px;
+      background:linear-gradient(135deg,var(--accent-2),var(--accent));
+      box-shadow:0 0 18px rgba(212,165,116,0.55); }
+    .brand span { font-size:20px; font-weight:600; letter-spacing:-0.5px; }
+
+    .trial-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'DM Mono',monospace; font-size:11.5px; letter-spacing:1px; text-transform:uppercase;
+      color:#7dd39a; border:1px solid rgba(125,211,154,0.3); border-radius:100px;
+      padding:8px 16px; margin-top:28px; background:rgba(125,211,154,0.06);
+    }
+    .trial-badge .pulse { width:6px; height:6px; border-radius:50%; background:#7dd39a;
+      box-shadow:0 0 8px #7dd39a; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+    .hero h1 { font-size:clamp(36px,5.5vw,54px); font-weight:600; letter-spacing:-2px; line-height:1.05; margin-bottom:18px; }
+    .hero h1 .grad {
+      background:linear-gradient(110deg,#fff 20%,var(--accent-2) 60%,var(--accent) 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hero p { font-size:17px; color:var(--muted); max-width:480px; margin:0 auto; }
+
+    /* ── STEPS ── */
+    .steps { display:grid; gap:14px; margin:8px 0 16px; }
+    .step {
+      display:flex; gap:18px; align-items:flex-start;
+      padding:22px 24px; background:var(--surface);
+      border:1px solid var(--border); border-radius:16px;
+      transition:border-color 0.2s, transform 0.2s;
+    }
+    .step:hover { border-color:var(--border-2); transform:translateY(-2px); }
+    .step-num {
+      flex-shrink:0; width:36px; height:36px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'DM Mono',monospace; font-size:15px;
+      background:rgba(212,165,116,0.1); color:var(--accent);
+      border:1px solid rgba(212,165,116,0.25);
+    }
+    .step-body h3 { font-size:16.5px; font-weight:600; letter-spacing:-0.3px; margin-bottom:5px;
+      display:flex; align-items:center; gap:10px; }
+    .step-body p { font-size:14px; color:var(--muted); line-height:1.6; }
+    .step-body strong { color:var(--text); font-weight:600; }
+    .step.key {
+      background:linear-gradient(180deg,rgba(212,165,116,0.08),rgba(212,165,116,0.02));
+      border-color:rgba(212,165,116,0.35);
+      box-shadow:0 16px 44px rgba(212,165,116,0.06);
+    }
+    .step.key .step-num { background:var(--accent); color:var(--bg); border-color:var(--accent); }
+    .imp {
+      font-family:'DM Mono',monospace; font-size:9px; letter-spacing:1px; text-transform:uppercase;
+      color:var(--accent); border:1px solid rgba(212,165,116,0.3); border-radius:5px; padding:2px 7px;
+    }
+    .done { color:#7dd39a; }
+
+    /* ── CTA ── */
+    .cta-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:30px 0 10px; }
+    .btn {
+      display:inline-flex; align-items:center; gap:9px;
+      padding:13px 24px; border-radius:11px; font-size:14.5px; font-weight:600;
+      cursor:pointer; transition:all 0.18s; border:none;
+    }
+    .btn-primary { background:var(--text); color:var(--bg); box-shadow:0 8px 28px rgba(212,165,116,0.18); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(212,165,116,0.3); }
+    .btn-outline { background:rgba(255,255,255,0.02); color:var(--text); border:1px solid var(--border-2); }
+    .btn-outline:hover { border-color:var(--muted); background:rgba(255,255,255,0.04); }
+
+    .pin-hint {
+      display:flex; align-items:center; gap:10px; justify-content:center;
+      font-size:13px; color:var(--dim); margin-top:6px;
+    }
+    .pin-hint .arrow { color:var(--accent); }
+
+    /* ── THEME PREVIEW ── */
+    .preview-section { margin:54px 0 30px; }
+    .preview-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; }
+    .preview-head h2 { font-size:18px; font-weight:600; letter-spacing:-0.4px; }
+    .preview-head span { font-family:'DM Mono',monospace; font-size:11px; color:var(--dim); letter-spacing:0.5px; }
+    .swatches { display:grid; grid-template-columns:repeat(8,1fr); gap:6px; }
+    .sw { aspect-ratio:1; border-radius:9px; position:relative; transition:transform 0.25s; }
+    .sw:hover { transform:scale(1.1); z-index:2; }
+    .sw span {
+      position:absolute; bottom:3px; left:5px;
+      font-family:'DM Mono',monospace; font-size:7px; text-transform:uppercase; letter-spacing:0.3px;
+      color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.6);
+    }
+    @media (max-width:640px) { .swatches { grid-template-columns:repeat(4,1fr); } }
+
+    footer { text-align:center; padding:36px 0 50px; font-size:13px; color:var(--dim); }
+    footer a { color:var(--muted); }
+    footer a:hover { color:var(--text); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-brand"><span class="dot"></span>Vellum</span>
+      <a id="nav-account" class="nav-acct" href="#">Account &amp; billing</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <canvas id="welcome-canvas"></canvas>
+    <div class="wrap hero-inner">
+      <h1>Welcome to <span class="grad">Vellum</span>.</h1>
+      <p>Here's how to make your AI workspace beautiful — in three quick steps.</p>
+      <div class="trial-badge"><span class="pulse"></span>7-day Pro trial active · all 220 themes unlocked</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num done">✓</div>
+        <div class="step-body">
+          <h3>Installed <span class="done" style="font-size:12px">Done</span></h3>
+          <p>Vellum is live on both Claude and ChatGPT. Nothing else to set up.</p>
+        </div>
+      </div>
+      <div class="step key">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Turn on dark mode <span class="imp">Important</span></h3>
+          <p>In Claude or ChatGPT settings, set appearance to <strong>Dark</strong>. Vellum's themes are crafted for dark mode — on light mode they'll look washed out.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Pick a theme</h3>
+          <p>Click the <strong>Vellum icon</strong> in your toolbar, then tap any theme to apply it instantly across the whole interface.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <a href="https://claude.ai" target="_blank" class="btn btn-primary">Open Claude</a>
+      <a href="https://chatgpt.com" target="_blank" class="btn btn-outline">Open ChatGPT</a>
+    </div>
+    <div class="pin-hint"><span class="arrow">↑</span> Tip: pin Vellum from the puzzle-piece menu so the icon is always one click away.</div>
+
+    <div class="preview-section">
+      <div class="preview-head">
+        <h2>A taste of the collection</h2>
+        <span>220 themes inside</span>
+      </div>
+      <div class="swatches" id="swatches"></div>
+    </div>
+
+    <div class="pricing">
+      <div class="pricing-head">
+        <h2>Love it? Keep Pro for pennies.</h2>
+        <p>Your trial unlocks everything for 7 days. Lock in all 220 themes for good — cancel or refund any time.</p>
+      </div>
+      <div class="pay-cards">
+        <div class="pay-card feat" id="w-monthly">
+          <div class="pc-tag pop">Most popular</div>
+          <div class="pc-price">$2.99</div>
+          <div class="pc-per">per month · cancel any time</div>
+          <ul class="pc-list">
+            <li>All 220 themes</li>
+            <li>Every animated background</li>
+            <li>New themes included</li>
+          </ul>
+          <div class="pc-btn">Get Pro Monthly</div>
+        </div>
+        <div class="pay-card" id="w-lifetime">
+          <div class="pc-tag">Best value · save 70%</div>
+          <div class="pc-price">$17.99</div>
+          <div class="pc-per">one payment · yours forever</div>
+          <ul class="pc-list">
+            <li>Everything in Pro</li>
+            <li>All future themes</li>
+            <li>14-day refund</li>
+          </ul>
+          <div class="pc-btn">Get Lifetime</div>
+        </div>
+      </div>
+      <div class="pay-note">Have a license key or company code? <a id="account-link" href="#">Open your account page</a>.</div>
+    </div>
+
+  </div>
+
+  <footer>
+    © 2026 Vellum · <a id="account-link-2" href="#" style="color:var(--muted)">Account</a>
+  </footer>
+
+  <script src="welcome.js"></script>
+</body>
+</html>
